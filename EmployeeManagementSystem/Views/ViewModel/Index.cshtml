@@ -1,0 +1,71 @@
+﻿
+@model ReflectionIT.Mvc.Paging.PagingList<EmployeeManagementSystem.Models.tblEmployee>
+@using ReflectionIT.Mvc.Paging;
+@addTagHelper  *,ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form method="get" class="form-inline">
+    <input name="filter" class="form-control" placeholder="filter" value=@Model.RouteValue["Filter"] />
+    <button type="submit" class="bth btn-info">
+        <span class="glyphicon glyphicon-search" aria-hidden="t">
+
+        </span>
+        Search
+    </button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Employee Name", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Salery)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JoiningDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ImageName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Salery)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JoiningDate)
+                </td>
+                <td>
+                    <img src="~/images/@item.ImageName" asp-append-version="true" width="80" height="70" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav aria-label="Employee navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>
